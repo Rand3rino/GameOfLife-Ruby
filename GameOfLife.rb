@@ -207,6 +207,66 @@ class GameOfLife
   def onBoard(i, j, x, y)
     return 1
   end
+
+
+  #*********************************************************************
+  #* get_neighbors is a helper function that returns
+  #* the number of live neighbors a cell has.
+  #*
+  #* @param i the selected height
+  #* @param j the selected width
+  #* @param x height of grid
+  #* @param y width of grid
+  #* @param grid memory address to "grid"
+  #*
+  #* @return neighbors number of live neighbors
+  #********************************************************************/  
+  def get_neighbors(i, j, x, y, grid)
+
+    # Variable to hold the number of alive neighbors.
+    neighbors = 0
+
+    # Go through each possible direction.
+    # If it does not move, do not increment neighbors
+    adjacent1 = [-1, 0, 1]
+    adjacent2 = [-1, 0, 1]
+
+    adjacent1.each do |a|
+      adjacent2.each do |b|
+    if a != 0 ||  b != 0
+          valid = onBoard( i+a, j+b, x, y)
+      if valid == 1
+        if grid[i+a][j+b] == 1
+          neighbors += 1
+        end
+      end
+    end
+      end
+    end
+    return neighbors
+  end
+
+  #*********************************************************************
+  #* onBoard is a helper function to check if a location is valid
+  #*
+  #* @param i the selected height
+  #* @param j the selected width
+  #* @param x height of grid
+  #* @param y width of grid
+  #*
+  #* @return 0 not on board : 1 on board
+  #********************************************************************/
+  def onBoard(i, j, x, y)
+    if i < 0 || j < 0 || i >= x || j >= y
+      return 0
+    else
+      return 1
+    end
+  end
+
+
+
+
 end
 
 g = GameOfLife.new()
